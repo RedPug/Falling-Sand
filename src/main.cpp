@@ -56,23 +56,23 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
     Grid::init(SCREEN_WIDTH/gridSpacing, SCREEN_HEIGHT/gridSpacing);
     printf("Initialization complete!\n");
 
-    int x = 0;
-    struct Data{
-        int v;
-    };
-    ThreadGroup<Data> threadGroup;
-    threadGroup.initializeThreads(4);
-    printf("ThreadGroup initialized.\n");
-    threadGroup.setFunction([](Data& data, int thread_id) {
-        printf("Thread %d got value to %d\n", thread_id, data.v);
-    });
-    threadGroup.setAllThreadData({Data{0}, Data{1}, Data{2}, Data{3}});
-    threadGroup.executeAndWait();
-    printf("ThreadGroup executed and waited!\n");
-    threadGroup.executeThreads();
-    printf("ThreadGroup executed again without waiting!\n");
-    threadGroup.waitForCompletion();
-    printf("ThreadGroup completed all tasks!\n");
+    // int x = 0;
+    // struct Data{
+    //     int v;
+    // };
+    // ThreadGroup<Data> threadGroup;
+    // threadGroup.initializeThreads(4);
+    // printf("ThreadGroup initialized.\n");
+    // threadGroup.setFunction([](Data& data, int thread_id) {
+    //     printf("Thread %d got value to %d\n", thread_id, data.v);
+    // });
+    // threadGroup.setAllThreadData({Data{0}, Data{1}, Data{2}, Data{3}});
+    // threadGroup.executeAndWait();
+    // printf("ThreadGroup executed and waited!\n");
+    // threadGroup.executeThreads();
+    // printf("ThreadGroup executed again without waiting!\n");
+    // threadGroup.waitForCompletion();
+    // printf("ThreadGroup completed all tasks!\n");
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
