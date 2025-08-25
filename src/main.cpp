@@ -43,7 +43,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
         return SDL_APP_FAILURE;
     }
 
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
+    // SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
 
     if (!SDL_CreateWindowAndRenderer("Falling Sand!", SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer)) {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
