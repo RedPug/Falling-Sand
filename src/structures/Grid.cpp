@@ -161,17 +161,17 @@ void updateChunk(int x, int y){
 }
 
 void Grid::onParticleUpdate(int x, int y) {
-    if(x % ParticleChunk::CHUNK_SIZE == 0){
-        updateChunk(x-1, y);
-    }else if(x % ParticleChunk::CHUNK_SIZE == ParticleChunk::CHUNK_SIZE - 1){
-        updateChunk(x+1, y);
-    }
+    // if(x % ParticleChunk::CHUNK_SIZE == 0){
+    //     updateChunk(x-1, y);
+    // }else if(x % ParticleChunk::CHUNK_SIZE == ParticleChunk::CHUNK_SIZE - 1){
+    //     updateChunk(x+1, y);
+    // }
 
-    if(y % ParticleChunk::CHUNK_SIZE == 0){
-        updateChunk(x, y-1);
-    }else if(y % ParticleChunk::CHUNK_SIZE == ParticleChunk::CHUNK_SIZE - 1){
-        updateChunk(x, y+1);
-    }
+    // if(y % ParticleChunk::CHUNK_SIZE == 0){
+    //     updateChunk(x, y-1);
+    // }else if(y % ParticleChunk::CHUNK_SIZE == ParticleChunk::CHUNK_SIZE - 1){
+    //     updateChunk(x, y+1);
+    // }
 
     updateChunk(x,y);
 }
@@ -224,28 +224,39 @@ void Grid::processParticles() {
         }
     }
 
-    for(int x = 0; x < num_particle_chunks_x; x++){
-        for(int y = num_particle_chunks_y - 1; y >= 0; y--) {
-            ParticleChunk& chunk = particleChunks[y * num_particle_chunks_x + x];
-            if(chunk.shouldProcess) {
-                for(int i = ParticleChunk::CHUNK_SIZE-1; i >=0; i--){
-                    for(int j = 0; j < ParticleChunk::CHUNK_SIZE; j++) {
-                        int x = j + chunk.x * ParticleChunk::CHUNK_SIZE;
-                        int y = i + chunk.y * ParticleChunk::CHUNK_SIZE;
-                        int index = y*width + x;
-                        if(index < num_particles)
-                            particles[y*width + x].onBlockUpdate();
-                    }
-                }
+    // for(int x = 0; x < num_particle_chunks_x; x++){
+    //     for(int y = num_particle_chunks_y - 1; y >= 0; y--) {
+    //         ParticleChunk& chunk = particleChunks[y * num_particle_chunks_x + x];
+    //         if(chunk.shouldProcess) {
+    //             for(int i = ParticleChunk::CHUNK_SIZE-1; i >=0; i--){
+    //                 for(int j = 0; j < ParticleChunk::CHUNK_SIZE; j++) {
+    //                     int x = j + chunk.x * ParticleChunk::CHUNK_SIZE;
+    //                     int y = i + chunk.y * ParticleChunk::CHUNK_SIZE;
+    //                     int index = y*width + x;
+    //                     if(index < num_particles)
+    //                         particles[y*width + x].onBlockUpdate();
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    for(int y = height - 1; y >= 0; y--){
+        for(int x0 = 0; x0 < width; x0++) {
+            int x = x0;
+            if(is_flipped != (y%2==0)){
+                x = width - x0 - 1;
             }
+            
+            particles[y * width + x].onBlockUpdate();
         }
     }
 
     for(int x = 0; x < num_particle_chunks_x; x++){
         for(int y = 0; y < num_particle_chunks_y; y++) {
             ParticleChunk& chunk = particleChunks[y * num_particle_chunks_x + x];
-            chunk.shouldProcess = chunk.shouldProcessNextFrame;
-            chunk.shouldProcessNextFrame = false;
+            // chunk.shouldProcess = chunk.shouldProcessNextFrame;
+            // chunk.shouldProcessNextFrame = false;
             chunk.dirty = true;
         }
     }

@@ -29,7 +29,7 @@ static std::pair<int, int> mouse_pos = std::make_pair(0, 0);  // Store mouse pos
 static ActionState currentAction = ActionState::NONE;
 static ParticleTypeID selectedParticle = ParticleTypeID::SAND;  // Default particle type to place
 static int selectionSize = 5;
-static int gridSpacing = 3;  // Spacing between grid cells in pixels
+static int gridSpacing = 4;  // Spacing between grid cells in pixels
 static bool is_debug = false;
 
 /* This function runs once at startup. */
@@ -257,7 +257,7 @@ void renderGrid(){
             chunk.dirty = false;  // Reset dirty flag after rendering
 
 
-            if(chunk.shouldProcess){
+            if(is_debug && chunk.shouldProcess){
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 
                 SDL_FRect thisRect = {
